@@ -4,15 +4,15 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
+console.log(process.env.AUTHDOMAIN)
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBzu4SJWlTRqJHE_NAfcSrTgUQsFDByWgA",
-  authDomain: "fodi-resturant-demo.firebaseapp.com",
-  projectId: "fodi-resturant-demo",
-  storageBucket: "fodi-resturant-demo.appspot.com",
-  messagingSenderId: "459935854597",
-  appId: "1:459935854597:web:57c4115c47c585de37ac6c"
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTHDOMAIN,
+  projectId: process.env.PROJECTID,
+  storageBucket: process.env.STORAGEBUCKET,
+  messagingSenderId: process.env.MESSAGINGSENDERID,
+  appId: process.env.APPID
 };
 
 
