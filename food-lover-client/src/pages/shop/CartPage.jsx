@@ -3,6 +3,7 @@ import { AuthContext } from '../../contexts/AuthProvider'
 import useCart from '../../hooks/useCart';
 import { FaTrash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 
 
@@ -27,15 +28,15 @@ const CartPage = () => {
                 }
             )                
                 .then((res) => res.json())
-                .then((data)=>{
-                    if(data.deletedCount > 0){
-                        refetch()
+                .then((data)=>{            
+                    
+                        refetch() 
                         Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
                         icon: "success"
                         });
-                    }
+                    
                 })              
             }
         });
@@ -126,7 +127,22 @@ const CartPage = () => {
         </div>
         </div>
         :
-        <div className=''><h1>NoCarts</h1></div>
+        <div className='min-h-screen'>
+            {/* Banner */}
+            <div>
+            <div className='py-48 flex flex-col justify-center items-center gap-8'>           
+                {/* Text side */}
+                <div className='text-center space-y-7'>
+                    <h2 className='md:text-5xl text-4xl font-bold leading-sung'>
+                    No items in the <span className='text-green'>Cart</span>
+                    </h2>                                        
+                </div>
+                <div className='m-10'>
+                    <Link to="/menu"><button className='btn bg-green text-white'>Go TO Menu</button></Link>    
+                </div>             
+            </div>
+        </div>
+        </div>
         }
     </div>
   )

@@ -7,7 +7,7 @@ const useCart = () => {
     const {refetch, data: cart = []} = useQuery({
         queryKey: ['carts', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:3000/carts?email=${user?.email}`);
+            const res = await fetch(`http://localhost:6002/carts?email=${user?.email}`);
             if (!res.ok) {
                 throw new Error('Network response was not ok')
             }

@@ -6,6 +6,7 @@ import { AuthContext } from "../contexts/AuthProvider";
 import Swal from 'sweetalert2';
 import { useQuery } from "@tanstack/react-query";
 import useCart from "../hooks/useCart";
+import axios from 'axios'
 
 const Card = ({ item }) => {
   const [isHeartFilled, setIsHeartFilled] = useState(false);
@@ -20,51 +21,51 @@ const Card = ({ item }) => {
   };
 
   // Add cart btn
-  const handleAddCart = (item) => {
-   if(user && user?.email){
-    const cartItem = {
-      menuItemId : _id,
-      name,
-      quantity:1,
-      image,
-      price,
-      email:user.email,
+  const handleAddToCart = item => {
+    console.log(user && user.email);
+    if(user && user.email){
+        const cartItem = {menuItemId: _id, name, quantity : 1, image, price, email: user.email}
+        axios.post('http://localhost:6002/carts', cartItem)
+        .then((response) => {
+          if(response){
+            refetch(); // refetch cart
+              Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Food added on the cart.',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+          }
+        })
+        .catch( (error) => {
+          console.log(error.response.data.message);
+          const errorMessage = error.response.data.message;
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: `${errorMessage}`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        });
     }
-    fetch("http://localhost:6002/carts", {
-      method: "POST",
-      body: JSON.stringify(cartItem),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Added to cart",
-        showConfirmButton: false,
-        timer: 1500
-      });
-      refetch();
-    })
-   }
-   else{
-    Swal.fire({
-      title: "Please Login?",
-      text: "Without an account can`t able to add products",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Signup"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/signup", {state:{from:location}})
-      }
-    });
-   }
-  }
+    else{
+        Swal.fire({
+            title: 'Please login to order the food',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Login now!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate('/login', {state: {from: location}})
+            }
+          })
+    }
+}
+
   return (
     <div to={`/menu/${item._id}`} className="card shadow-xl relative mr-5 md:my-5">
       <div
@@ -87,7 +88,7 @@ const Card = ({ item }) => {
           <h5 className="font-semibold">
             <span className="text-sm text-red">$ </span> {item.price}
           </h5>
-          <button className="btn bg-green text-white" onClick={()=>{handleAddCart(item)}}>Add to Cart </button>
+          <button className="btn bg-green text-white" onClick={()=>{handleAddToCart(item)}}>Add to Cart </button>
         </div>
       </div>
     </div>
