@@ -10,12 +10,17 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@resturant-fodi.q0nh8vw.mongodb.net/?retryWrites=true&w=majority&appName=Resturant-fodi`)
+.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@resturant-fodi.q0nh8vw.mongodb.net/demo-fodi-clint?retryWrites=true&w=majority&appName=Resturant-fodi`)
 .then(
   console.log("mongoDB connect successfully!")
 )
 .catch((error)=>console.log("error in mongo DB",error))
 
+// Import router here
+const menuRouter = require("./api/routes/menuRoutes");
+const cartRouter = require("./api/routes/cartRouter");
+app.use('/menu', menuRouter);
+app.use('/carts', cartRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
