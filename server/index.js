@@ -9,7 +9,13 @@ const mongoose = require('mongoose');
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(`mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@resturant-fodi.q0nh8vw.mongodb.net/?retryWrites=true&w=majority&appName=Resturant-fodi`)
+mongoose
+.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@resturant-fodi.q0nh8vw.mongodb.net/?retryWrites=true&w=majority&appName=Resturant-fodi`)
+.then(
+  console.log("mongoDB connect successfully!")
+)
+.catch((error)=>console.log("error in mongo DB",error))
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
