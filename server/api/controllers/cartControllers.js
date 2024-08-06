@@ -82,5 +82,9 @@ const getSingleCart = async (req, res) => {
 
 
 module.exports = {
-    getCartByEmail
+    getCartByEmail,
+    addToCart,
+    deleteCart,
+    updateCart,
+    getSingleCart
 }
