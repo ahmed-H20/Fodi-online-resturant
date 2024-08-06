@@ -69,8 +69,10 @@ const updateCart = async(req, res) => {
 
 // Get single recipe
 const getSingleCart = async (req, res) => {
-    try{
-
+    const cartId = req.params.id;
+    try{        
+        const getedCart = Carts.findById(cartId);
+        res.status(200).json(getedCart);
     }
     catch (error) {
         res.status(500).json({message : error.message});
