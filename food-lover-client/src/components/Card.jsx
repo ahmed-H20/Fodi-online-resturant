@@ -30,7 +30,7 @@ const Card = ({ item }) => {
       price,
       email:user.email,
     }
-    fetch("http://localhost:3000/carts", {
+    fetch("http://localhost:6002/carts", {
       method: "POST",
       body: JSON.stringify(cartItem),
       headers: {
