@@ -64,6 +64,12 @@ const CartPage = () => {
           setCartItems(updatedCart);
         });
   };
+  // Calculate total prise
+  const cartSubTotal = cart.reduce((total, item) => {
+    return total + calculatePrice(item);
+  }, 0);
+
+
 
   // Delete Item
   const handledeleteItem = (item) => {
@@ -189,7 +195,7 @@ const CartPage = () => {
             <div className="md:w-1/2 space-y-3">
               <h3 className="font-medium">Shopping Details</h3>
               <p>Total Items: {cart.length}</p>
-              <p>Total Price: 0</p>
+              <p>Total Price: ${cartSubTotal}</p>
               <button className="btn bg-green text-white">
                 Process Checkout
               </button>
