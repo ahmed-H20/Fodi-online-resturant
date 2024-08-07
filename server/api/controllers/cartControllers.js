@@ -1,108 +1,92 @@
-const Carts = require('../models/Carts');
+const Carts = require("../models/Carts");
 
-// Get carts using email
-const getCartByEmail = async(req, res) => {
-    try{
-        const email = req.query.email;
-        const query = {email: email};
-        const result = await Carts.find(query).exec();
-        res.status(200).json(result);
-    }
-    catch (error){
-        res.status(500).json({message : error.message});
-    }
-}
+// get carts using email
+const getCartByEmail = async (req, res) => {
+  try {
+    const email = req.query.email;
+    const query = { email: email };
+    const result = await Carts.find(query).exec();
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+// post a cart when add-to-cart btn clicked
+const addToCart = async (req, res) => {
+  const { menuItemId, name, recipe, image, Price, quantity, email } = req.body;
+  
+  try {
+    // exiting menu item
+    const existingCartItem = await Carts.findOne({ email, menuItemId });
 
-// Add item to cart
-const addToCart = async(req, res) => {
-    const {menuItemId, name, recipe, image, price, quantity, email} = req.body;
-    try{
-        //Exiting menu item
-        const existingCartItem = await Carts.findOne({email, menuItemId});
-        if(existingCartItem){
-            return res.status(400).json({message: "Product already exists in the cart!"})
-        }
+    if (existingCartItem) {
+      return res
+        .status(400)
+        .json({ message: "Product already exists in the cart!" });
+    }
+    
 
-        const cartItem = await Carts.create({
-            menuItemId, name, recipe, image, price, quantity, email
-        })
+    const cartItem = await Carts.create(req.body);
+    console.log(cartItem)
+    res.status(201).json(cartItem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-        res.status(201).json(cartItem)
+// delete a cart item
+const deleteCart = async (req, res) => {
+  const cartId = req.params.id;
+  try {
+    const deletedCart = await Carts.findByIdAndDelete(cartId);
+    if (!deletedCart) {
+      return res.status(401).json({ message: "Cart Items not found!" });
     }
-    catch (error) {
-        res.status(500).json({message : error.message});
-    }
-}
+    res.status(200).json({ message: "Cart Item Deleted Successfully!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-// Delete a cart item
-const deleteCart = async(req, res) => {
-    const cartId = req.params.id;
-    try{
-        const deletedCart = await Carts.findByIdAndDelete(cartId);
-        if(!deletedCart){
-            return res.status(401).json({message: "Cart Item not found!"})
-        }
-        res.status(200).json({message: "Cart Item Deleted Successfully!"})
-    }
-    catch (error) {
-        res.status(500).json({message : error.message});
-    }
-}
+// updata a cart item
+const updateCart = async (req, res) => {
+  const cartId = req.params.id;
+  const { menuItemId, name, recipe, image, price, quantity, email } = req.body;
 
-// Update a cart item
-const updateCart = async(req, res) => {
-    try{
-        const cartId = req.params.id;
-        const {menuItemId, name, recipe, image, price, quantity, email} = req.body;
-        const updatedCart = await Carts.findByIdAndUpdate(cartId, {menuItemId, name, recipe, image, price, quantity, email}, {
-            new: true, runValidators: true
-        });
-        if(!updatedCart){
-            return res.status(401).json({message: "Cart Item not found!"})
-        }
-        res.status(200).json(updatedCart);
+  try {
+    const updatedCart = await Carts.findByIdAndUpdate(
+      cartId,
+      { menuItemId, name, recipe, image, price, quantity, email },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!updatedCart) {
+      return res.status(404).json({ message: "Cart Item not found" });
     }
-    catch (error) {
-        res.status(500).json({message : error.message});
-    }
-}
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-// Get single recipe
+// get single recipe
 const getSingleCart = async (req, res) => {
-    const cartId = req.params.id;
-    try{        
-        const getedCart = Carts.findById(cartId);
-        res.status(200).json(getedCart);
-    }
-    catch (error) {
-        res.status(500).json({message : error.message});
-    }
-}
-
-// Update cart quantity
-const updateQuantity = async (req, res) => {
-    const cartId = req.params.id;
-    const {quantity} = req.body;
-    const filter = {_id: new ObjectId(id)};
-    const option = { upsert: true };
-
-    const updateDoc = {
-        $set: {
-            quantity: parseInt(quantity, 10),
-        },
-    };
-
-    const result = await Carts.updateOne(filter, updateDoc, option);
-}
-
-
+  const cartId = req.params.id;
+  try {
+    const cartItem = await Carts.findById(cartId);
+    res.status(200).json(cartItem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = {
-    getCartByEmail,
-    addToCart,
-    deleteCart,
-    updateCart,
-    getSingleCart,
-    updateQuantity
-}
+  getCartByEmail,
+  addToCart,
+  deleteCart,
+  updateCart,
+  getSingleCart,
+};

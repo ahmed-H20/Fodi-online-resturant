@@ -13,7 +13,6 @@ const Nav = () => {
   const [isSticky, setSticky] = useState(false);
   const {user} = useContext(AuthContext);
   const [cart, refetch] = useCart();
-  console.log(user)
   useEffect(()=>{
     const handleScroll = ()=>{
       const offSet = window.scrollY;

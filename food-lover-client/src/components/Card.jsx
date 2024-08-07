@@ -1,26 +1,28 @@
-/* eslint-disable react/prop-types */
 import React, { useContext, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
 import useCart from "../hooks/useCart";
 import axios from "axios";
 
-const Card = ({ item }) => {
-  const [isHeartFilled, setIsHeartFilled] = useState(false);
-  const { user } = useContext(AuthContext);
+const Cards = ({ item }) => {
   const { name, image, price, recipe, _id } = item;
+
+  const { user } = useContext(AuthContext);
+  const [cart, refetch] = useCart();
   const navigate = useNavigate();
   const location = useLocation();
-  const [cart, refetch] = useCart();
+  // console.log(item)
+  const [isHeartFilled, setIsHeartFilled] = useState(false);
+
   const handleHeartClick = () => {
     setIsHeartFilled(!isHeartFilled);
   };
 
-  // Add cart btn
+  // add to cart handler
   const handleAddToCart = (item) => {
+    // console.log(item);
     if (user && user.email) {
       const cartItem = {
         menuItemId: _id,
@@ -30,11 +32,11 @@ const Card = ({ item }) => {
         price,
         email: user.email,
       };
+
       axios
         .post("http://localhost:6002/carts", cartItem)
         .then((response) => {
-          console,log(cartItem)
-          if (response) {          
+          if (response) {
             refetch(); // refetch cart
             Swal.fire({
               position: "center",
@@ -104,10 +106,8 @@ const Card = ({ item }) => {
             <span className="text-sm text-red">$ </span> {item.price}
           </h5>
           <button
+            onClick={() => handleAddToCart(item)}
             className="btn bg-green text-white"
-            onClick={() => {
-              handleAddToCart(item);
-            }}
           >
             Add to Cart{" "}
           </button>
@@ -117,4 +117,4 @@ const Card = ({ item }) => {
   );
 };
 
-export default Card;
+export default Cards;

@@ -12,7 +12,6 @@ const CartPage = () => {
 
   // Calculate price
   const calculatePrice = (item) => {
-    console.log(cart)
     return item.price * item.quantity;
   };
 
