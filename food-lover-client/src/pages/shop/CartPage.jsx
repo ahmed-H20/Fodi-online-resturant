@@ -17,6 +17,7 @@ const CartPage = () => {
 
   // Decrease quantity
   const handleDecrease = (item) => {
+    if (item.quantity > 1){
     fetch(`http://localhost:6002/carts/${item._id}`, {
       method: "PUT",
       headers: {
@@ -27,7 +28,7 @@ const CartPage = () => {
       .then((res) => res.json())
       .then((data) => {
         const updatedCart = cartItems.map((cartItem) => {
-          if (cartItem === item._id && item.quantity > 0) {
+          if (cartItem === item._id) {
             return {
               ...cartItem,
               quantity: cartItem.quantity - 1,
@@ -38,6 +39,7 @@ const CartPage = () => {
         refetch();
         setCartItems(updatedCart);
       });
+    }
   };
 
   // Increase quantity
