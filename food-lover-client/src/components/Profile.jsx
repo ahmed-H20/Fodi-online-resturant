@@ -3,6 +3,7 @@ import React, { useCallback, useContext } from 'react'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthProvider'
+import UserProfile from '../pages/dashboard/UserProfile'
 
 const Profile = ({ user }) => {
   const {SignOUt} = useContext(AuthContext)
@@ -30,9 +31,9 @@ const Profile = ({ user }) => {
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
         <li>
-          <a>
+          <Link to="/profile">          
             Profile
-          </a>
+          </Link>
         </li>
         <li><a>Order</a></li>
         <li><a>Settings</a></li>
