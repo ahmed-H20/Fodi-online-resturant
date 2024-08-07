@@ -20,7 +20,7 @@ mongoose
 const menuRouter = require("./api/routes/menuRoutes");
 const cartRouter = require("./api/routes/cartRouter");
 app.use('/menu', menuRouter);
-app.use('/carts', cartRouter)
+app.use('/carts', cartRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

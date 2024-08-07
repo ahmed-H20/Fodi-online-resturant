@@ -80,6 +80,22 @@ const getSingleCart = async (req, res) => {
     }
 }
 
+// Update cart quantity
+const updateQuantity = async (req, res) => {
+    const cartId = req.params.id;
+    const {quantity} = req.body;
+    const filter = {_id: new ObjectId(id)};
+    const option = { upsert: true };
+
+    const updateDoc = {
+        $set: {
+            quantity: parseInt(quantity, 10),
+        },
+    };
+
+    const result = await Carts.updateOne(filter, updateDoc, option);
+}
+
 
 
 module.exports = {
@@ -87,5 +103,6 @@ module.exports = {
     addToCart,
     deleteCart,
     updateCart,
-    getSingleCart
+    getSingleCart,
+    updateQuantity
 }
