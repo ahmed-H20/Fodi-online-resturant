@@ -31,7 +31,7 @@ const CartPage = () => {
             return {
               ...cartItem,
               quantity: cartItem.quantity - 1,
-            };            
+            };
           }
           return cartItems;
         });
@@ -43,33 +43,31 @@ const CartPage = () => {
   // Increase quantity
   const handleIncrease = (item) => {
     fetch(`http://localhost:6002/carts/${item._id}`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify({ quantity: item.quantity + 1 }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const updatedCart = cartItems.map((cartItem) => {
-            if (cartItem === item._id) {
-              return {
-                ...cartItem,
-                quantity: cartItem.quantity + 1,
-              };
-            }
-            return cartItems;
-          });
-          refetch();
-          setCartItems(updatedCart);
+      method: "PUT",
+      headers: {
+        "content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({ quantity: item.quantity + 1 }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedCart = cartItems.map((cartItem) => {
+          if (cartItem === item._id) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+            };
+          }
+          return cartItems;
         });
+        refetch();
+        setCartItems(updatedCart);
+      });
   };
   // Calculate total prise
   const cartSubTotal = cart.reduce((total, item) => {
     return total + calculatePrice(item);
   }, 0);
-
-
 
   // Delete Item
   const handledeleteItem = (item) => {
