@@ -48,21 +48,10 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  // check signed in
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      // console.log(currentUser);
       setUser(currentUser);
-      if (currentUser) {
-        const userInfo = { email: currentUser.email };
-        axios.post("http://localhost:6002/jwt", userInfo).then((response) => {
-          // console.log(response.data.token);
-          if (response.data.token) {
-            localStorage.setItem("access-token", response.data.token);
-          }
-        });
-      } else {
-        localStorage.removeItem("access-token");
-      }
       setLoading(false);
     });
 
@@ -70,6 +59,8 @@ const AuthProvider = ({ children }) => {
       return unsubscribe();
     };
   }, []);
+
+
 
   const authInfo = {
     user,

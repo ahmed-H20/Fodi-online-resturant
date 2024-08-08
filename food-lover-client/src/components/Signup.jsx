@@ -24,19 +24,16 @@ const Signup = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    // console.log(email, password)
     createUser(email, password)
       .then((result) => {
         // Signed up
         const user = result.user;
-        // updateUser(data.name, data.photoURL).then(() => {
-          const userInfor = {
+          const userInfo = {
             name: data.name,
             email: data.email,
           };
           
-        // });
-        axios.post("http://localhost:6002/users", userInfor)
+        axios.post("http://localhost:6002/users", userInfo)
             .then((response) => {
               // console.log(response);
               alert("Signin successful!");
