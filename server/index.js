@@ -4,6 +4,7 @@ const cors = require('cors')
 require('dotenv').config()
 const port = process.env.PORT || 3000
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 //Middleware
 app.use(cors());
@@ -24,6 +25,14 @@ app.use('/menu', menuRouter);
 app.use('/carts', cartRouter);
 app.use('/users', userRoutes);
 
+// jwt authentication
+app.post('/jwt', async(req, res) => {
+  const user = req.body;
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: '1hr'
+  })
+  res.send({token});
+})
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
