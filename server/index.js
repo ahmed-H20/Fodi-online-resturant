@@ -21,6 +21,7 @@ mongoose
 const menuRouter = require("./api/routes/menuRoutes");
 const cartRouter = require("./api/routes/cartRouter");
 const userRoutes = require('./api/routes/userRoutes');
+const verifyToken = require('./api/middleware/verifyToken')
 app.use('/menu', menuRouter);
 app.use('/carts', cartRouter);
 app.use('/users', userRoutes);
