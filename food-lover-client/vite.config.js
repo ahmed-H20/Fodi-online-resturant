@@ -12,7 +12,8 @@ export default defineConfig(({ mode }) => {
       'process.env.PROJECTID': JSON.stringify(env.PROJECTID),
       'process.env.STORAGEBUCKET': JSON.stringify(env.STORAGEBUCKET),
       'process.env.MESSAGINGSENDERID': JSON.stringify(env.MESSAGINGSENDERID),
-      'process.env.APPID': JSON.stringify(env.APPID)
+      'process.env.APPID': JSON.stringify(env.APPID),
+      'process.env.IMAGE_HOSTING_KEY': JSON.stringify(env.IMAGE_HOSTING_KEY),
     },
     plugins: [react()],
   }

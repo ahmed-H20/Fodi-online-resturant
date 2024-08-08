@@ -1,10 +1,44 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaUtensils } from "react-icons/fa";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const AddMenu = () => {
   const { register, handleSubmit, reset } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const axiosPublic = useAxiosPublic();
+  const image_hosting = process.env.IMAGE_HOSTING_KEY;
+  const imageHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting}`
+  const onSubmit = async (data) => {
+    console.log(data)
+    const imageFile = { image: data.image[0] };
+    const hostingImg = await axiosPublic.post(imageHostingApi, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    if (hostingImg.data.success) {
+        const menuItem = {
+          name: data.name,
+          category: data.category,
+          price: parseFloat(data.price), 
+          recipe: data.recipe,
+          image: hostingImg.data.data.display_url
+    };
+        const postMenuItem = axiosPublic.post('/menu', menuItem);
+        if(postMenuItem){
+          reset()
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your Item is inserted successfully!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      }
+    };
+  
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">
