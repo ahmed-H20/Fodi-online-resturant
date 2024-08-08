@@ -8,6 +8,7 @@ import CartPage from "../pages/shop/CartPage";
 import UserProfile from "../pages/dashboard/UserProfile";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Users from "../pages/dashboard/admin/Users";
+import AddMenu from "../pages/dashboard/admin/AddMenu";
 
 const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         {
           path: "/dashboard/users",
           element: <Users/>
+        },
+        {
+          path: "/dashboard/add-menu",
+          element: <AddMenu/>
         }
       ]
     }
