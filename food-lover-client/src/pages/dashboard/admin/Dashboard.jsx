@@ -12,7 +12,7 @@ import {
 
 import logo from "/logo.png";
 import { FaCartShopping } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Users from "./Users";
 
 const Dashboard = () => {
@@ -35,7 +35,7 @@ const Dashboard = () => {
               </button>
             </div>
             <div className="mt-5 md:mt-2 mx-4">
-              <Users/>
+              <Outlet/>
             </div>
           </div>
           <div className="drawer-side">
@@ -83,7 +83,7 @@ const Dashboard = () => {
               <hr />
 
               {/* shared nav links */}
-              Dashboard
+              <li><Link to="/"><MdDashboard /> Home</Link></li>
             </ul>
           </div>
         </div>
