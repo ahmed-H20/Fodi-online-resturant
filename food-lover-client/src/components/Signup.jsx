@@ -11,18 +11,10 @@ const Signup = () => {
         handleSubmit,
         formState: { errors },
       } = useForm()
-      const {signinWithGmail,createUser} = useContext(AuthContext);
+      
+      const {signinWithGmail,createUser, updateUser} = useContext(AuthContext);
       const [errorMassage, setErrorMassege] = useState("");
-    //   const onSubmit = (data) => {
-    //     createUser(data.email,data.password)
-    //     .then((result)=>{
-    //         const user = result.user;
-    //         alert("Create account Success!")
-    //    }).catch((error) => {
-    //         const errorMessage = error.message;
-    //         setErrorMassege(errorMessage);
-    //     })
-    //   }
+
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || "/";
@@ -33,9 +25,19 @@ const Signup = () => {
         createUser(email, password).then((result) => {
           // Signed up 
           const user = result.user;
-          alert("Account creation successfully done!")
-          document.getElementById("my_modal_5").close()
-          navigate("/", {replace: true})
+          updateUser(data.email, data.photoURL).then(() => {
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+            };
+            axiosPublic.post("/users", userInfo)
+              .then((response) => {
+                // console.log(response);
+                alert("Signin successful!");
+                navigate("/", { replace: true });
+              });
+          });
+          
           // ...
         })
         .catch((error) => {
