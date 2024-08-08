@@ -27,7 +27,7 @@ const Modal = () => {
             const user = result.user;
             alert("Login Success")
             document.getElementById("my_modal_5").close()
-            navigate(from, {replace: true})
+            navigate('/', {replace: true})
        }).catch((error)=> {
             const errorMassege = error.message;
             setErrorMessage("Provide a correct email and password!")

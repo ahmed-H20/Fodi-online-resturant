@@ -25,20 +25,19 @@ const Signup = () => {
         createUser(email, password).then((result) => {
           // Signed up 
           const user = result.user;
-          updateUser(data.email, data.photoURL).then(() => {
+          updateUser(email, data.photoURL).then(() => {
             const userInfo = {
               name: data.name,
               email: data.email,
             };
-            axiosPublic.post("/users", userInfo)
+            axios.post("http://localhost:6002/users", userInfo)
               .then((response) => {
-                // console.log(response);
+                console.log(response);
                 alert("Signin successful!");
                 navigate("/", { replace: true });
               });
           });
           
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
