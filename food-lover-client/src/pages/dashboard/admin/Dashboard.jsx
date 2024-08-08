@@ -13,6 +13,7 @@ import {
 import logo from "/logo.png";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import Users from "./Users";
 
 const Dashboard = () => {
   return (
@@ -34,7 +35,7 @@ const Dashboard = () => {
               </button>
             </div>
             <div className="mt-5 md:mt-2 mx-4">
-              Dashbouer
+              <Users/>
             </div>
           </div>
           <div className="drawer-side">
