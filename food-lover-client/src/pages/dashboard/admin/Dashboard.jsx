@@ -30,9 +30,6 @@ const Dashboard = () => {
               >
                 <MdDashboardCustomize />
               </label>
-              <button className="btn rounded-full px-6 bg-green flex items-center gap-2 text-white sm:hidden">
-                <FaRegUser /> Logout
-              </button>
             </div>
             <div className="mt-5 md:mt-2 mx-4">
               <Outlet/>

@@ -24,7 +24,7 @@ const AddMenu = () => {
           price: parseFloat(data.price), 
           recipe: data.recipe,
           image: hostingImg.data.data.display_url
-    };
+    }
         const postMenuItem = axiosPublic.post('/menu', menuItem);
         if(postMenuItem){
           reset()
@@ -37,6 +37,7 @@ const AddMenu = () => {
           });
         }
       }
+      
     };
   
   return (
