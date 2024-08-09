@@ -11,6 +11,7 @@ import Users from "../pages/dashboard/admin/Users";
 import AddMenu from "../pages/dashboard/admin/AddMenu";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
+import Payment from "../pages/shop/Payment";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
         {
           path:"/profile",
           element:<PrivateRouter><UserProfile/></PrivateRouter>
+        },
+        {
+          path: "/checkout-process",
+          element: <Payment/>
         }
       ]
     },
@@ -61,7 +66,8 @@ const router = createBrowserRouter([
           loader: ({params}) => fetch(`http://localhost:6002/menu/${params.id}`)
         }
       ]
-    }
+    },
+
   ]);
 
 export default router;
