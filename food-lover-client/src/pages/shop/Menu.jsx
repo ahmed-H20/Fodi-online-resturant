@@ -182,7 +182,7 @@ const Menu = () => {
         <div className="flex justify-center my-8">
           {Array.from({
             length: Math.ceil(filteredItems.length / itemsPerPage),
-          }).map((_, index) => (
+          }).map((index) => (
             <button
               key={index + 1}
               onClick={() => paginate(index + 1)}

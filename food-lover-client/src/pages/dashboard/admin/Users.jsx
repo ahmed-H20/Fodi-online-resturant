@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaTrashAlt, FaUser, FaUsers } from "react-icons/fa";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import axios from "axios";
 //import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Users = () => {
+  const axiosPublic = useAxiosPublic();
   const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -13,14 +16,14 @@ const Users = () => {
   });
   // console.log(users);
   const handleMakeAdmin = (user) => {
-    axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
+    axiosPublic.patch(`/users/admin/${user._id}`).then((res) => {
       alert(`${user.name} is now admin`);
       refetch();
     });
   };
 
-  const handleDeleteUser = user => {
-    axiosSecure.delete(`/users/${user._id}`).then(res => {
+  const handleDeleteUser = (user) => {
+    axiosPublic.delete(`/users/${user._id}`).then(res => {
       alert(`${user.name} is removed from database`);
       refetch();
     })
