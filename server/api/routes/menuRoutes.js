@@ -9,5 +9,9 @@ router.get('/', menuControllers.getAllMenuItems);
 router.post('/', menuControllers.postMenuItem);
 //delete menu item
 router.delete('/:id', menuControllers.deleteMenuItem)
+// get single menu item
+router.get('/:id', menuControllers.singleMenuItem);
+// update single menu item
+router.patch('/:id', menuControllers.updateMenuItem)
 
 module.exports = router;
