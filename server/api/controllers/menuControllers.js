@@ -22,6 +22,25 @@ const postMenuItem = async(req, res) => {
     }
 }
 
+// delete a menu item
+const deleteMenuItem = async(req, res) => {
+    const menuId = req.params.id;
+    // console.log(menuId)
+    try {
+        const deletedItem = await Menu.findByIdAndDelete(menuId);
+
+        // console.log(deletedItem);
+
+        if(!deletedItem){
+            return res.status(404).json({ message:"Menu not found"})
+        }
+        res.status(200).json({message: "Menu Item deleted successfully!"})
+        
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 
 
