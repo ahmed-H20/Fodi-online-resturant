@@ -46,5 +46,6 @@ const deleteMenuItem = async(req, res) => {
 
 module.exports = {
     getAllMenuItems,
-    postMenuItem
+    postMenuItem,
+    deleteMenuItem
 }

@@ -9,6 +9,7 @@ import UserProfile from "../pages/dashboard/UserProfile";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Users from "../pages/dashboard/admin/Users";
 import AddMenu from "../pages/dashboard/admin/AddMenu";
+import ManageItems from "../pages/dashboard/admin/ManageItems";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         {
           path: "/dashboard/add-menu",
           element: <AddMenu/>
+        },
+        {
+          path: "/dashboard/manage-items",
+          element: <ManageItems/>
         }
       ]
     }
